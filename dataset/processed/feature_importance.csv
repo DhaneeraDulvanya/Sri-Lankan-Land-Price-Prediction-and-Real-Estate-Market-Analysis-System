@@ -1,0 +1,45 @@
+Feature,Importance
+categorical__LOCALITY_Colombo 7,0.16042994
+numerical__PROPERTYSQFT,0.10864035
+numerical__BEDS,0.060036786
+categorical__LOCALITY_Awissawella,0.054345015
+numerical__BATH,0.04484259
+categorical__LOCALITY_Mount Lavinia,0.044685837
+categorical__LOCALITY_Kohuwala,0.036693092
+categorical__LOCALITY_Pitakotte,0.034033038
+categorical__LOCALITY_Nawala,0.03359934
+categorical__LOCALITY_Nugegoda,0.032385197
+categorical__LOCALITY_Malabe,0.029985404
+categorical__LOCALITY_Dematagoda,0.02905016
+categorical__LOCALITY_Rathmalana,0.027807185
+categorical__LOCALITY_Boralesgamuwa,0.023218248
+categorical__LOCALITY_Dehiwala,0.023181504
+categorical__LOCALITY_Morakatiya,0.021337375
+categorical__LOCALITY_Colombo 6,0.020756556
+categorical__LOCALITY_Battaramulla,0.018584922
+categorical__LOCALITY_Makadana,0.018111408
+categorical__LOCALITY_Pamankada,0.017099429
+categorical__LOCALITY_Thalawathugoda,0.01708408
+categorical__LOCALITY_Kothalawala,0.012852969
+categorical__LOCALITY_Kottawa,0.012092976
+categorical__LOCALITY_Bambalapitiya ,0.01052343
+categorical__LOCALITY_Moratuwa,0.010374236
+categorical__LOCALITY_Colombo 8,0.009327419
+categorical__LOCALITY_Kolonnawa,0.009114903
+categorical__LOCALITY_Kirulapona,0.008748179
+categorical__LOCALITY_Kaduwela,0.008589401
+categorical__TYPE_House for sale,0.008270486
+categorical__LOCALITY_Kesbewa,0.008075196
+categorical__LOCALITY_Homagama,0.007854974
+categorical__LOCALITY_Colombo 9,0.0070026135
+categorical__LOCALITY_Wellampitiya,0.0062820143
+categorical__LOCALITY_Padukka,0.00465752
+categorical__LOCALITY_Piliyandala,0.004384753
+categorical__LOCALITY_Pannipitiya,0.003846665
+categorical__TYPE_Villa for sale,0.0034541409
+categorical__LOCALITY_Maththegoda,0.0026064562
+categorical__LOCALITY_Polgasovita,0.0022866414
+categorical__LOCALITY_Maharagama,0.0022598852
+categorical__LOCALITY_Athurugiriya,0.0014876298
+categorical__STATE_Colombo,0.0
+categorical__LOCALITY_Makumbura,0.0
