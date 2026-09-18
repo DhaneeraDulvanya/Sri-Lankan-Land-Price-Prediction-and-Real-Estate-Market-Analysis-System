@@ -34,6 +34,8 @@ MODEL_PATH = os.path.join(
 
 model = joblib.load(MODEL_PATH)
 
+print("MODEL LOADED:", type(model))
+
 
 @app.get("/")
 def home():
@@ -54,6 +56,8 @@ def health_check():
 def predict_price(
     house: HousePredictionRequest
 ):
+    
+    print("Received request:", house)
 
     input_data = pd.DataFrame({
         "BEDS": [house.beds],
@@ -64,13 +68,24 @@ def predict_price(
         "LOCALITY": [house.locality]
     })
 
-    prediction = model.predict(input_data)
+    print("Input DataFrame:")
+    print(input_data)
+    print("Columns:", input_data.columns.tolist())
 
-    predicted_price = float(prediction[0])
+    try:
+        prediction = model.predict(input_data)
 
-    return {
-        "predicted_price": round(
-            predicted_price,
-            2
-        )
-    }
+        print("Raw prediction:", prediction)
+
+        predicted_price = float(prediction[0])
+
+        return {
+            "predicted_price": round(predicted_price, 2)
+        }
+
+    except Exception as e:
+        print("PREDICTION ERROR:", repr(e))
+
+        return {
+            "error": str(e)
+        }
