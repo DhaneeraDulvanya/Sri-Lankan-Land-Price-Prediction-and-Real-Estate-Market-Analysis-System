@@ -8,9 +8,7 @@ import os
 from schemas import HousePredictionRequest
 
 
-# --------------------------------------------------
 # FastAPI Application
-# --------------------------------------------------
 
 app = FastAPI(
     title="Real Estate Price Prediction API",
@@ -19,9 +17,7 @@ app = FastAPI(
 )
 
 
-# --------------------------------------------------
 # CORS
-# --------------------------------------------------
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,10 +30,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# --------------------------------------------------
 # Model
-# --------------------------------------------------
 
 MODEL_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -51,9 +44,7 @@ model = joblib.load(MODEL_PATH)
 print("MODEL LOADED:", type(model))
 
 
-# --------------------------------------------------
 # Dataset
-# --------------------------------------------------
 
 DATA_PATH = os.path.join(
     os.path.dirname(__file__),
@@ -70,9 +61,7 @@ print("Rows:", len(df))
 print("Columns:", df.columns.tolist())
 
 
-# --------------------------------------------------
 # Home
-# --------------------------------------------------
 
 @app.get("/")
 def home():
@@ -80,10 +69,7 @@ def home():
         "message": "Real Estate Price Prediction API is running"
     }
 
-
-# --------------------------------------------------
 # Health Check
-# --------------------------------------------------
 
 @app.get("/health")
 def health_check():
@@ -94,9 +80,7 @@ def health_check():
     }
 
 
-# --------------------------------------------------
 # House Price Prediction
-# --------------------------------------------------
 
 @app.post("/predict")
 def predict_price(house: HousePredictionRequest):
@@ -118,15 +102,9 @@ def predict_price(house: HousePredictionRequest):
         "predicted_price": round(predicted_price, 2)
     }
 
-
-# ==================================================
 # MARKET ANALYSIS APIs
-# ==================================================
 
-
-# --------------------------------------------------
 # Market Summary
-# --------------------------------------------------
 
 @app.get("/analytics/summary")
 def market_summary():
@@ -141,9 +119,7 @@ def market_summary():
     }
 
 
-# --------------------------------------------------
 # Average Price by Property Type
-# --------------------------------------------------
 
 @app.get("/analytics/property-types")
 def property_type_analysis():
@@ -163,10 +139,7 @@ def property_type_analysis():
 
     return result.to_dict(orient="records")
 
-
-# --------------------------------------------------
-# Average Price by City
-# --------------------------------------------------
+# Average Price by State
 
 @app.get("/analytics/states")
 def city_analysis():
@@ -192,10 +165,7 @@ def city_analysis():
 
     return result.to_dict(orient="records")
 
-
-# --------------------------------------------------
 # Average Price by Locality
-# --------------------------------------------------
 
 @app.get("/analytics/localities")
 def locality_analysis():
