@@ -190,3 +190,29 @@ def locality_analysis():
     ]
 
     return result.to_dict(orient="records")
+
+# Price vs Property SQFT
+
+@app.get("/analytics/price-vs-sqft")
+def price_vs_sqft():
+
+    result = (
+        df[["PROPERTYSQFT", "PRICE"]]
+        .dropna()
+        .sort_values("PROPERTYSQFT")
+    )
+
+    # Limit the number of points for better frontend performance
+    # result = result.head(500)
+
+    result = result.sample(
+    min(500, len(result)),
+    random_state=42
+)
+
+    result.columns = [
+        "sqft",
+        "price"
+    ]
+
+    return result.to_dict(orient="records")
