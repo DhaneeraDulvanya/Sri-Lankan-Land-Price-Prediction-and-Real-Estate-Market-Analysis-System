@@ -206,9 +206,9 @@ def price_vs_sqft():
     # result = result.head(500)
 
     result = result.sample(
-    min(500, len(result)),
-    random_state=42
-)
+        min(500, len(result)),
+        random_state=42
+    )
 
     result.columns = [
         "sqft",
