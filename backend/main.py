@@ -217,17 +217,34 @@ def price_vs_sqft():
 
     return result.to_dict(orient="records")
 
-# Available Cities
+# Locality Analysis
 
-@app.get("/analytics/locality-list")
-def locality_list():
+@app.get("/analytics/localities")
+def locality_analysis():
 
-    localities = (
-        df["LOCALITY"]
-        .dropna()
-        .drop_duplicates()
-        .sort_values()
-        .tolist()
+    result = (
+        df.groupby("LOCALITY")
+        .agg(
+            average_price=("PRICE", "mean"),
+            property_count=("PRICE", "count")
+        )
+        .reset_index()
+        .sort_values(
+            "average_price",
+            ascending=False
+        )
     )
 
-    return localities
+    result["average_price"] = (
+        result["average_price"].round(2)
+    )
+
+    result.columns = [
+        "locality",
+        "average_price",
+        "property_count"
+    ]
+
+    return result.to_dict(
+        orient="records"
+    )
