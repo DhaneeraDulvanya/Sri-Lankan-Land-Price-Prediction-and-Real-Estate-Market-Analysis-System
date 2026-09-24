@@ -11,7 +11,7 @@ import {
 
 import { getPropertyTypeAnalysis } from "../services/api";
 
-function PropertyTypeChart() {
+function PropertyTypeChart({ locality }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -19,7 +19,7 @@ function PropertyTypeChart() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await getPropertyTypeAnalysis();
+        const result = await getPropertyTypeAnalysis( locality );
 
         const formattedData = result.map((item) => ({
           type: item.type,
@@ -36,7 +36,7 @@ function PropertyTypeChart() {
     };
 
     loadData();
-  }, []);
+  }, [ locality ]);
 
   return (
     <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
