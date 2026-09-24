@@ -28,7 +28,10 @@ function MarketAnalysis() {
 
         {/* KPI Cards */}
 
-        <MarketStats />
+
+        <MarketStats
+          locality={selectedLocality}
+        />
 
         {/* Charts */}
 
