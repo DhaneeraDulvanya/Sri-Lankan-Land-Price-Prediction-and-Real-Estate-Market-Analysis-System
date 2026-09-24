@@ -263,3 +263,34 @@ def locality_list():
     )
 
     return localities
+
+# Filtered Market Summary
+
+@app.get("/analytics/summary")
+def market_summary(locality: str | None = None):
+
+    filtered_df = df.copy()
+
+    if locality:
+        filtered_df = filtered_df[
+            filtered_df["LOCALITY"] == locality
+        ]
+
+    return {
+        "total_properties": int(len(filtered_df)),
+        "average_price": round(
+            float(filtered_df["PRICE"].mean()), 2
+        ),
+        "median_price": round(
+            float(filtered_df["PRICE"].median()), 2
+        ),
+        "average_sqft": round(
+            float(filtered_df["PROPERTYSQFT"].mean()), 2
+        ),
+        "average_beds": round(
+            float(filtered_df["BEDS"].mean()), 2
+        ),
+        "average_baths": round(
+            float(filtered_df["BATH"].mean()), 2
+        )
+    }
