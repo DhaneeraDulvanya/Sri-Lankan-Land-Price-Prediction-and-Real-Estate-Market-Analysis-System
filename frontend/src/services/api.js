@@ -46,8 +46,16 @@ export const getLocalityAnalysis = async () => {
   return response.data;
 };
 
-export const getPriceVsSqft = async () => {
-  const response = await API.get("/analytics/price-vs-sqft");
+export const getPriceVsSqft = async (
+  locality = ""
+) => {
+
+  const url = locality
+    ? `/analytics/price-vs-sqft?locality=${encodeURIComponent(locality)}`
+    : "/analytics/price-vs-sqft";
+
+  const response = await API.get(url);
+
   return response.data;
 };
 
