@@ -316,3 +316,28 @@ def market_summary(locality: str | None = None):
             float(filtered_df["BATH"].mean()), 2
         )
     }
+
+@app.get("/analytics/feature-importance")
+def feature_importance():
+
+    trained_model = model.named_steps["model"]
+    preprocessor = model.named_steps["preprocessor"]
+
+    feature_names = preprocessor.get_feature_names_out()
+    importance_values = trained_model.feature_importances_
+
+    result = []
+
+    for name, importance in zip(feature_names, importance_values):
+        result.append({
+            "feature": name,
+            "importance": round(float(importance), 6)
+        })
+
+    result = sorted(
+        result,
+        key=lambda x: x["importance"],
+        reverse=True
+    )
+
+    return result[:15]
