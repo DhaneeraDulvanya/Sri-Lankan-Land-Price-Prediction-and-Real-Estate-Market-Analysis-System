@@ -55,7 +55,9 @@ function PriceChart({ locality }) {
         </h2>
 
         <p className="mt-1 text-sm text-slate-400">
-          Relationship between property size and property price
+          {locality
+            ? `Property size and price relationship in ${locality}`
+            : "Relationship between property size and price"}
         </p>
 
       </div>
