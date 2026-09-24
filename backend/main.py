@@ -317,6 +317,16 @@ def market_summary(locality: str | None = None):
         )
     }
 
+@app.get("/analytics/model-performance")
+def model_performance():
+
+    return {
+        "model": "XGBoost",
+        "r2": 0.8691,
+        "mae": 16930000,
+        "rmse": 27860000
+    }
+
 @app.get("/analytics/feature-importance")
 def feature_importance():
 
