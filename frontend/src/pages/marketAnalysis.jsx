@@ -4,14 +4,23 @@ import PropertyTypeChart from "../components/propertyTypeChart";
 import LocalityAnalysisChart from "../components/localityAnalysisChart";
 import LocalityFilter from "../components/localityFilter";
 
+import { useState } from "react";
+
 function MarketAnalysis() {
+
+  const [selectedLocality, setSelectedLocality] =
+    useState("");
+
+
   return (
     <div className="min-h-screen bg-slate-950 px-6 py-12">
+
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
 
         <div className="mb-10">
+
           <p className="text-sm font-semibold uppercase tracking-wider text-cyan-400">
             Real Estate Analytics
           </p>
@@ -21,17 +30,32 @@ function MarketAnalysis() {
           </h1>
 
           <p className="mt-4 max-w-2xl text-slate-400">
-            Explore property prices, property sizes and market
-            characteristics using interactive data visualizations.
+            Explore property prices, property sizes,
+            property types and localities using
+            interactive market analytics.
           </p>
+
         </div>
 
-        {/* KPI Cards */}
 
+        {/* Locality Filter */}
+
+        <div className="mb-8 max-w-md">
+
+          <LocalityFilter
+            selectedLocality={selectedLocality}
+            onLocalityChange={setSelectedLocality}
+          />
+
+        </div>
+
+
+        {/* KPI Cards */}
 
         <MarketStats
           locality={selectedLocality}
         />
+
 
         {/* Charts */}
 
@@ -41,19 +65,19 @@ function MarketAnalysis() {
             locality={selectedLocality}
           />
 
-          <PropertyTypeChart 
+          <PropertyTypeChart
             locality={selectedLocality}
           />
 
           <LocalityAnalysisChart />
 
-          <LocalityFilter />
-
         </div>
 
       </div>
+
     </div>
   );
 }
+
 
 export default MarketAnalysis;
