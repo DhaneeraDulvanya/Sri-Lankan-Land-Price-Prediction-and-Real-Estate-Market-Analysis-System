@@ -23,8 +23,16 @@ export const getMarketSummary = async (locality = "") => {
   return response.data;
 };
 
-export const getPropertyTypeAnalysis = async () => {
-  const response = await API.get("/analytics/property-types");
+export const getPropertyTypeAnalysis = async (
+  locality = ""
+) => {
+
+  const url = locality
+    ? `/analytics/property-types?locality=${encodeURIComponent(locality)}`
+    : "/analytics/property-types";
+
+  const response = await API.get(url);
+
   return response.data;
 };
 
