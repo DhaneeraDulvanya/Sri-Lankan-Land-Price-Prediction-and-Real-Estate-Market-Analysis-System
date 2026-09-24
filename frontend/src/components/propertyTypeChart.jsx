@@ -46,7 +46,9 @@ function PropertyTypeChart({ locality }) {
         </h2>
 
         <p className="mt-1 text-sm text-slate-400">
-          Average property price calculated from the dataset
+        {locality
+          ? `Average prices in ${locality}`
+          : "Average prices across all localities"}
         </p>
       </div>
 
