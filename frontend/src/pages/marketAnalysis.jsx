@@ -39,7 +39,9 @@ function MarketAnalysis() {
 
           <PriceChart />
 
-          <PropertyTypeChart />
+          <PropertyTypeChart 
+            locality={selectedLocality}
+          />
 
           <LocalityAnalysisChart />
 
