@@ -2,6 +2,7 @@ import MarketStats from "../components/statcard";
 import PriceChart from "../components/priceChart";
 import PropertyTypeChart from "../components/propertyTypeChart";
 import LocalityAnalysisChart from "../components/localityAnalysisChart";
+import LocalityFilter from "../components/localityFilter";
 
 function MarketAnalysis() {
   return (
@@ -38,6 +39,8 @@ function MarketAnalysis() {
           <PropertyTypeChart />
 
           <LocalityAnalysisChart />
+
+          <LocalityFilter />
 
         </div>
 
