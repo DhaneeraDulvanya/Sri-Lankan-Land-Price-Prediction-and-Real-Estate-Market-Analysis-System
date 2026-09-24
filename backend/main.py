@@ -248,3 +248,18 @@ def locality_analysis():
     return result.to_dict(
         orient="records"
     )
+
+# Available Localities
+
+@app.get("/analytics/locality-list")
+def locality_list():
+
+    localities = (
+        df["LOCALITY"]
+        .dropna()
+        .drop_duplicates()
+        .sort_values()
+        .tolist()
+    )
+
+    return localities
