@@ -37,7 +37,9 @@ function MarketAnalysis() {
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
 
-          <PriceChart />
+          <PriceChart
+            locality={selectedLocality}
+          />
 
           <PropertyTypeChart 
             locality={selectedLocality}
