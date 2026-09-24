@@ -64,5 +64,11 @@ export const getLocalityList = async () => {
   return response.data;
 };
 
+
+export const getFeatureImportance = async () => {
+  const response = await API.get("/analytics/feature-importance");
+  return response.data;
+};
+
 export default API;
 
