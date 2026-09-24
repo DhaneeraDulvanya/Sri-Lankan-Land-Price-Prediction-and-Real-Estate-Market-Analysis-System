@@ -13,7 +13,7 @@ import {
 import { getPriceVsSqft } from "../services/api";
 
 
-function PriceChart() {
+function PriceChart({ locality }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,7 +22,7 @@ function PriceChart() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await getPriceVsSqft();
+        const result = await getPriceVsSqft(locality);
 
         setData(result);
 
@@ -40,7 +40,7 @@ function PriceChart() {
 
     loadData();
 
-  }, []);
+  }, [locality]);
 
 
   return (
