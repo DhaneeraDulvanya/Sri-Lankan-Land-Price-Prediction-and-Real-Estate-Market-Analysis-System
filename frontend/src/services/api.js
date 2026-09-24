@@ -70,5 +70,10 @@ export const getFeatureImportance = async () => {
   return response.data;
 };
 
+export const getModelPerformance = async () => {
+  const response = await API.get("/analytics/model-performance");
+  return response.data;
+};
+
 export default API;
 
