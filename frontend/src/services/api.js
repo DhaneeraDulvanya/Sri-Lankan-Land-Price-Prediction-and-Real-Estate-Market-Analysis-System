@@ -12,8 +12,14 @@ export const predictHousePrice = async (houseData) => {
   return response.data;
 };
 
-export const getMarketSummary = async () => {
-  const response = await API.get("/analytics/summary");
+export const getMarketSummary = async (locality = "") => {
+
+  const url = locality
+    ? `/analytics/summary?locality=${encodeURIComponent(locality)}`
+    : "/analytics/summary";
+
+  const response = await API.get(url);
+
   return response.data;
 };
 
