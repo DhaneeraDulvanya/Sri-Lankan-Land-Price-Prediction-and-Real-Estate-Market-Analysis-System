@@ -37,5 +37,10 @@ export const getPriceVsSqft = async () => {
   return response.data;
 };
 
+export const getLocalityList = async () => {
+  const response = await API.get("/analytics/locality-list");
+  return response.data;
+};
+
 export default API;
 
