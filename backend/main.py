@@ -119,13 +119,23 @@ def market_summary():
     }
 
 
-# Average Price by Property Type
+# Property Type Analysis
 
 @app.get("/analytics/property-types")
-def property_type_analysis():
+def property_type_analysis(
+    locality: str | None = None
+):
+
+    filtered_df = df.copy()
+
+    if locality:
+        filtered_df = filtered_df[
+            filtered_df["LOCALITY"] == locality
+        ]
 
     result = (
-        df.groupby("TYPE")["PRICE"]
+        filtered_df
+        .groupby("TYPE")["PRICE"]
         .mean()
         .reset_index()
     )
@@ -135,9 +145,13 @@ def property_type_analysis():
         "average_price"
     ]
 
-    result["average_price"] = result["average_price"].round(2)
+    result["average_price"] = (
+        result["average_price"].round(2)
+    )
 
-    return result.to_dict(orient="records")
+    return result.to_dict(
+        orient="records"
+    )
 
 # Average Price by State
 
