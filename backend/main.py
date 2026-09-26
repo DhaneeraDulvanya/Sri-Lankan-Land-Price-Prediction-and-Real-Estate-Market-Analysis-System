@@ -7,6 +7,8 @@ import os
 
 from schemas import HousePredictionRequest
 
+import shap
+
 
 # FastAPI Application
 
@@ -39,7 +41,14 @@ MODEL_PATH = os.path.join(
     "house_price_xgboost.pkl"
 )
 
+
+
 model = joblib.load(MODEL_PATH)
+
+trained_xgb = model.named_steps["model"]
+preprocessor = model.named_steps["preprocessor"]
+
+explainer = shap.TreeExplainer(trained_xgb)
 
 print("MODEL LOADED:", type(model))
 
@@ -342,6 +351,52 @@ def feature_importance():
         result.append({
             "feature": name,
             "importance": round(float(importance), 6)
+        })
+
+    result = sorted(
+        result,
+        key=lambda x: x["importance"],
+        reverse=True
+    )
+
+    return result[:15]
+
+# shap 
+
+@app.get("/analytics/shap")
+def shap_analysis():
+
+    sample_df = df[
+        [
+            "BEDS",
+            "BATH",
+            "PROPERTYSQFT",
+            "TYPE",
+            "STATE",
+            "LOCALITY"
+        ]
+    ].dropna().sample(
+        min(300, len(df)),
+        random_state=42
+    )
+
+    transformed_data = preprocessor.transform(sample_df)
+
+    shap_result = explainer(transformed_data)
+
+    mean_abs_shap = abs(shap_result.values).mean(axis=0)
+
+    feature_names = preprocessor.get_feature_names_out()
+
+    result = []
+
+    for name, value in zip(
+        feature_names,
+        mean_abs_shap
+    ):
+        result.append({
+            "feature": name,
+            "importance": round(float(value), 4)
         })
 
     result = sorted(
