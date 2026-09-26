@@ -111,6 +111,54 @@ def predict_price(house: HousePredictionRequest):
         "predicted_price": round(predicted_price, 2)
     }
 
+@app.post("/predict/explain")
+def predict_with_explanation(house: HousePredictionRequest):
+
+    input_data = pd.DataFrame({
+        "BEDS": [house.beds],
+        "BATH": [house.bath],
+        "PROPERTYSQFT": [house.property_sqft],
+        "TYPE": [house.type],
+        "STATE": [house.state],
+        "LOCALITY": [house.locality]
+    })
+
+    # Apply the same preprocessing used during training
+    transformed_input = preprocessor.transform(input_data)
+
+    # Predict property price
+    prediction = trained_xgb.predict(transformed_input)
+
+    predicted_price = float(prediction[0])
+
+    # Calculate SHAP values
+    shap_result = explainer(transformed_input)
+
+    shap_values = shap_result.values[0]
+
+    feature_names = preprocessor.get_feature_names_out()
+
+    explanations = []
+
+    for feature, value in zip(feature_names, shap_values):
+
+        explanations.append({
+            "feature": feature,
+            "shap_value": round(float(value), 2)
+        })
+
+    # Largest contributions first
+    explanations = sorted(
+        explanations,
+        key=lambda x: abs(x["shap_value"]),
+        reverse=True
+    )
+
+    return {
+        "predicted_price": round(predicted_price, 2),
+        "explanations": explanations[:10]
+    }
+
 # MARKET ANALYSIS APIs
 
 # Market Summary
