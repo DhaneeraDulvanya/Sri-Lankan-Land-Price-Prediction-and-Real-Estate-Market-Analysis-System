@@ -1,5 +1,6 @@
 import ModelPerformance from "../components/modelPerformance";
 import FeatureImportance from "../components/featureImportance";
+import ShapChart from "../components/ShapChart";
 
 function ModelInsights() {
   return (
@@ -26,6 +27,10 @@ function ModelInsights() {
 
         <div className="mt-8">
           <FeatureImportance />
+        </div>
+
+        <div className="mt-8">
+          <ShapChart />
         </div>
 
       </div>
