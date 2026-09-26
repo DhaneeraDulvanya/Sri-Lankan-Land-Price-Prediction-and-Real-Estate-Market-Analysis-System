@@ -75,5 +75,10 @@ export const getModelPerformance = async () => {
   return response.data;
 };
 
+export const getShapAnalysis = async () => {
+  const response = await API.get("/analytics/shap");
+  return response.data;
+};
+
 export default API;
 
