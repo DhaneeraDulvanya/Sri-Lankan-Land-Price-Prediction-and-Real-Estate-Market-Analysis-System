@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { predictHousePrice } from "../services/api";
+import { predictHousePriceWithExplanation } from "../services/api";
 
 function PredictionForm() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ function PredictionForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [result, setResult] = useState(null);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -24,34 +27,39 @@ function PredictionForm() {
     }));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    setLoading(true);
-    setError("");
-    setPrediction(null);
+  setLoading(true);
+  setError("");
+  setResult(null);
 
-    try {
-      const data = await predictHousePrice({
-        beds: Number(formData.beds),
-        bath: Number(formData.bath),
-        property_sqft: Number(formData.property_sqft),
-        type: formData.type,
-        state: formData.state,
-        locality: formData.locality,
-      });
+  try {
+    const houseData = {
+      beds: Number(formData.beds),
+      bath: Number(formData.bath),
+      property_sqft: Number(formData.property_sqft),
+      type: formData.type,
+      state: formData.state,
+      locality: formData.locality,
+    };
 
-      setPrediction(data.predicted_price);
-    } catch (err) {
-      console.error(err);
+    const data = await predictHousePriceWithExplanation(
+      houseData
+    );
 
-      setError(
-        "Unable to generate prediction. Please make sure the FastAPI server is running."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    setResult(data);
+
+  } catch (error) {
+    console.error(error);
+
+    setError(
+      "Unable to predict the property price. Please check your input."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
