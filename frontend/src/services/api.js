@@ -64,6 +64,16 @@ export const getLocalityList = async () => {
   return response.data;
 };
 
+export const getPropertyTypeList = async () => {
+  const response = await API.get("/analytics/property-types-list");
+  return response.data;
+};
+
+
+export const getStateList = async () => {
+  const response = await API.get("/analytics/state-list");
+  return response.data;
+};
 
 export const getFeatureImportance = async () => {
   const response = await API.get("/analytics/feature-importance");
