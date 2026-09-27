@@ -199,14 +199,19 @@ function PredictionForm() {
                   Locality
                 </label>
 
-                <input
-                  type="text"
+                <select
                   name="locality"
                   value={formData.locality}
                   onChange={handleChange}
-                  required
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
-                />
+                >
+                  <option value="">Select locality</option>
+
+                  {localities.map((locality) => (
+                    <option key={locality} value={locality}>
+                      {locality}
+                    </option>
+                  ))}
+                </select>
               </div>
 
             </div>
