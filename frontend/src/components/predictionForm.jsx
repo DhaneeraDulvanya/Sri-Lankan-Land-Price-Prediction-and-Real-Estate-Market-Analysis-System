@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { predictHousePrice } from "../services/api";
 import {
-  predictHousePriceWithExplanation,
+  // predictHousePriceWithExplanation,
   getPropertyTypeList,
   getStateList,
   getLocalityList,
@@ -114,116 +114,145 @@ function PredictionForm() {
                 className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
               />
             </div>
+          </div>
+          {/* Bath */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-300">
+              Bathrooms
+            </label>
 
-            {/* Bath */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-300">
-                Bathrooms
-              </label>
+            <input
+              type="number"
+              name="bath"
+              value={formData.bath}
+              onChange={handleChange}
+              min="0.5"
+              max="20"
+              step="0.5"
+              required
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
+            />
+          </div>
 
-              <input
-                type="number"
-                name="bath"
-                value={formData.bath}
-                onChange={handleChange}
-                min="0.5"
-                max="20"
-                step="0.5"
-                required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
-              />
-            </div>
+          {/* SQFT */}
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
+              Property SQFT
+            </label>
 
-            {/* SQFT */}
-            <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-slate-300">
-                Property SQFT
-              </label>
+            <input
+              type="number"
+              name="property_sqft"
+              value={formData.property_sqft}
+              onChange={handleChange}
+              min="101"
+              max="100000"
+              required
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
+            />
+          </div>
 
-              <input
-                type="number"
-                name="property_sqft"
-                value={formData.property_sqft}
-                onChange={handleChange}
-                min="101"
-                max="100000"
-                required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
-              />
-            </div>
+          {/* Type */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-300">
+              Property Type
+            </label>
 
-            {/* Type */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-300">
-                Property Type
-              </label>
-
-              <select
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-              >
-                <option value="">Select property type</option>
-
-                {propertyTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* State */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-300">
-                State
-              </label>
-
-              <select
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-              >
-                <option value="">Select state</option>
-
-                {states.map((state) => (
-                  <option key={state} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
-
-              {/* Locality */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-300">
-                  Locality
-                </label>
-
-                <select
-                  name="locality"
-                  value={formData.locality}
-                  onChange={handleChange}
-                >
-                  <option value="">Select locality</option>
-
-                  {localities.map((locality) => (
-                    <option key={locality} value={locality}>
-                      {locality}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-            </div>
-
-            {/* Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="mt-8 w-full rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+            <select
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3
+               text-slate-200 shadow-sm outline-none transition-all duration-200
+               hover:border-slate-600
+               focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
             >
-              {loading ? "Predicting..." : "Predict House Price"}
-            </button>
+              <option value="" className="bg-slate-900 text-slate-400">
+                Select property type
+              </option>
+
+              {propertyTypes.map((type) => (
+                <option
+                  key={type}
+                  value={type}
+                  className="bg-slate-900 text-slate-200"
+                >
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* State */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-300">
+              State
+            </label>
+
+            <select
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3
+               text-slate-200 shadow-sm outline-none transition-all duration-200
+               hover:border-slate-600
+               focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+            >
+              <option value="" className="bg-slate-900 text-slate-400">
+                Select state
+              </option>
+
+              {states.map((state) => (
+                <option
+                  key={state}
+                  value={state}
+                  className="bg-slate-900 text-slate-200"
+                >
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Locality */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-300">
+              Locality
+            </label>
+
+            <select
+              name="locality"
+              value={formData.locality}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3
+               text-slate-200 shadow-sm outline-none transition-all duration-200
+               hover:border-slate-600
+               focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+            >
+              <option value="" className="bg-slate-900 text-slate-400">
+                Select locality
+              </option>
+
+              {localities.map((locality) => (
+                <option
+                  key={locality}
+                  value={locality}
+                  className="bg-slate-900 text-slate-200"
+                >
+                  {locality}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-8 w-full rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {loading ? "Predicting..." : "Predict House Price"}
+          </button>
 
         </form>
 
