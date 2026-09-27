@@ -341,6 +341,30 @@ def locality_list():
 
     return localities
 
+@app.get("/analytics/property-types-list")
+def property_type_list():
+    property_types = (
+        df["TYPE"]
+        .dropna()
+        .drop_duplicates()
+        .sort_values()
+        .tolist()
+    )
+
+    return property_types
+
+@app.get("/analytics/state-list")
+def state_list():
+    states = (
+        df["STATE"]
+        .dropna()
+        .drop_duplicates()
+        .sort_values()
+        .tolist()
+    )
+
+    return states
+
 # Filtered Market Summary
 
 @app.get("/analytics/summary")
