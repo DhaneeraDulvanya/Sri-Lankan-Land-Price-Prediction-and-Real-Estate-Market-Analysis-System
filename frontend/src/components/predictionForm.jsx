@@ -162,10 +162,14 @@ function PredictionForm() {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
               >
-                <option value="House for Sale">House for sale</option>
-                <option value="Villa For Sale">Villa for sale</option>
+                <option value="">Select property type</option>
+
+                {propertyTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
             </div>
 
