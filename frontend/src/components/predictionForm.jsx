@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { predictHousePrice } from "../services/api";
-import { predictHousePriceWithExplanation } from "../services/api";
+import {
+  predictHousePriceWithExplanation,
+  getPropertyTypeList,
+  getStateList,
+  getLocalityList,
+} from "../services/api";
 
 function PredictionForm() {
   const [formData, setFormData] = useState({
@@ -16,7 +21,30 @@ function PredictionForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [result, setResult] = useState(null);
+  const [propertyTypes, setPropertyTypes] = useState([]);
+  const [states, setStates] = useState([]);
+  const [localities, setLocalities] = useState([]);
+
+  useEffect(() => {
+    const loadDropdownData = async () => {
+      try {
+        const [types, statesData, localitiesData] = await Promise.all([
+          getPropertyTypeList(),
+          getStateList(),
+          getLocalityList(),
+        ]);
+
+        setPropertyTypes(types);
+        setStates(statesData);
+        setLocalities(localitiesData);
+
+      } catch (error) {
+        console.error("Failed to load dropdown data:", error);
+      }
+    };
+
+    loadDropdownData();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,29 +60,24 @@ function PredictionForm() {
 
     setLoading(true);
     setError("");
-    setResult(null);
+    setPrediction(null);
 
     try {
-      const houseData = {
+      const data = await predictHousePrice({
         beds: Number(formData.beds),
         bath: Number(formData.bath),
         property_sqft: Number(formData.property_sqft),
         type: formData.type,
         state: formData.state,
         locality: formData.locality,
-      };
+      });
 
-      const data = await predictHousePriceWithExplanation(
-        houseData
-      );
-
-      setResult(data);
-
-    } catch (error) {
-      console.error(error);
+      setPrediction(data.predicted_price);
+    } catch (err) {
+      console.error(err);
 
       setError(
-        "Unable to predict the property price. Please check your input."
+        "Unable to generate prediction. Please make sure the FastAPI server is running."
       );
     } finally {
       setLoading(false);
@@ -184,9 +207,9 @@ function PredictionForm() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 w-full rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-8 w-full rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loading ? "Predicting..." : "Predict Price"}
+            {loading ? "Predicting..." : "Predict House Price"}
           </button>
 
         </form>
@@ -234,77 +257,14 @@ function PredictionForm() {
             </div>
           )}
 
-          {result && (
-            <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-6">
-
-              <p className="text-sm font-medium text-slate-400">
-                Estimated Property Price
-              </p>
-
-              <h2 className="mt-2 text-4xl font-bold text-white">
-                Rs. {Math.round(result.predicted_price).toLocaleString()}
-              </h2>
-
-            </div>
-          )}
-
-          {result && result.explanations?.length > 0 && (
-            <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-900 p-6">
-
-              <h2 className="text-2xl font-bold text-white">
-                Why did the model predict this price?
-              </h2>
-
-              <p className="mt-2 text-sm text-slate-400">
-                These features had the largest contributions to this prediction.
-              </p>
-
-              <div className="mt-6 space-y-3">
-
-                {result.explanations.map((item) => {
-                  const positive = item.shap_value >= 0;
-
-                  const featureName = item.feature
-                    .replace("num__", "")
-                    .replace("cat__", "");
-
-                  return (
-                    <div
-                      key={item.feature}
-                      className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 p-4"
-                    >
-
-                      <span className="text-slate-300">
-                        {featureName}
-                      </span>
-
-                      <span
-                        className={
-                          positive
-                            ? "font-semibold text-emerald-400"
-                            : "font-semibold text-red-400"
-                        }
-                      >
-                        {positive ? "+" : "-"}Rs. 
-                        {Math.abs(
-                          Math.round(item.shap_value)
-                        ).toLocaleString()}
-                      </span>
-
-                    </div>
-                  );
-                })}
-
-              </div>
-            </div>
-          )}
-
           {/* Error */}
           {error && (
-            <div className="mt-6 rounded-xl border border-red-900 bg-red-950/30 p-4">
-              <p className="text-red-400">
+            <div className="mt-4 rounded-lg border border-red-900 bg-red-950/40 p-4">
+
+              <p className="text-sm text-red-400">
                 {error}
               </p>
+
             </div>
           )}
 
