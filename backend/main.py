@@ -41,8 +41,6 @@ MODEL_PATH = os.path.join(
     "house_price_xgboost.pkl"
 )
 
-
-
 model = joblib.load(MODEL_PATH)
 
 trained_xgb = model.named_steps["model"]
