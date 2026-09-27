@@ -179,42 +179,46 @@ function PredictionForm() {
                 State
               </label>
 
-              <input
-                type="text"
+              <select
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
-              />
+              >
+                <option value="">Select state</option>
+
+                {states.map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+
+              {/* Locality */}
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-300">
+                  Locality
+                </label>
+
+                <input
+                  type="text"
+                  name="locality"
+                  value={formData.locality}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
+                />
+              </div>
+
             </div>
 
-            {/* Locality */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-300">
-                Locality
-              </label>
-
-              <input
-                type="text"
-                name="locality"
-                value={formData.locality}
-                onChange={handleChange}
-                required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none focus:border-cyan-400"
-              />
-            </div>
-
-          </div>
-
-          {/* Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-8 w-full rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {loading ? "Predicting..." : "Predict House Price"}
-          </button>
+            {/* Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-8 w-full rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {loading ? "Predicting..." : "Predict House Price"}
+            </button>
 
         </form>
 
