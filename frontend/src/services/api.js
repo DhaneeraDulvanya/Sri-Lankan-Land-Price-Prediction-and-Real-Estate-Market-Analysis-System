@@ -12,15 +12,6 @@ export const predictHousePrice = async (houseData) => {
   return response.data;
 };
 
-export const predictHousePriceWithExplanation = async (houseData) => {
-  const response = await API.post(
-    "/predict/explain",
-    houseData
-  );
-
-  return response.data;
-};
-
 export const getMarketSummary = async (locality = "") => {
 
   const url = locality
@@ -88,8 +79,6 @@ export const getShapAnalysis = async () => {
   const response = await API.get("/analytics/shap");
   return response.data;
 };
-
-
 
 export default API;
 
