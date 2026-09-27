@@ -27,39 +27,39 @@ function PredictionForm() {
     }));
   };
 
-const handleSubmit = async (event) => {
-  event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  setLoading(true);
-  setError("");
-  setResult(null);
+    setLoading(true);
+    setError("");
+    setResult(null);
 
-  try {
-    const houseData = {
-      beds: Number(formData.beds),
-      bath: Number(formData.bath),
-      property_sqft: Number(formData.property_sqft),
-      type: formData.type,
-      state: formData.state,
-      locality: formData.locality,
-    };
+    try {
+      const houseData = {
+        beds: Number(formData.beds),
+        bath: Number(formData.bath),
+        property_sqft: Number(formData.property_sqft),
+        type: formData.type,
+        state: formData.state,
+        locality: formData.locality,
+      };
 
-    const data = await predictHousePriceWithExplanation(
-      houseData
-    );
+      const data = await predictHousePriceWithExplanation(
+        houseData
+      );
 
-    setResult(data);
+      setResult(data);
 
-  } catch (error) {
-    console.error(error);
+    } catch (error) {
+      console.error(error);
 
-    setError(
-      "Unable to predict the property price. Please check your input."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
+      setError(
+        "Unable to predict the property price. Please check your input."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
@@ -184,9 +184,9 @@ const handleSubmit = async (event) => {
           <button
             type="submit"
             disabled={loading}
-            className="mt-8 w-full rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-6 w-full rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loading ? "Predicting..." : "Predict House Price"}
+            {loading ? "Predicting..." : "Predict Price"}
           </button>
 
         </form>
@@ -236,12 +236,10 @@ const handleSubmit = async (event) => {
 
           {/* Error */}
           {error && (
-            <div className="mt-4 rounded-lg border border-red-900 bg-red-950/40 p-4">
-
-              <p className="text-sm text-red-400">
+            <div className="mt-6 rounded-xl border border-red-900 bg-red-950/30 p-4">
+              <p className="text-red-400">
                 {error}
               </p>
-
             </div>
           )}
 
