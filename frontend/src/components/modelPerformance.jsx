@@ -48,12 +48,12 @@ function ModelPerformance() {
     },
     {
       title: "MAE",
-      value: `$${Math.round(performance.mae).toLocaleString()}`,
+      value: `Rs. ${Math.round(performance.mae).toLocaleString()}`,
       description: "Mean Absolute Error",
     },
     {
       title: "RMSE",
-      value: `$${Math.round(performance.rmse).toLocaleString()}`,
+      value: `Rs. ${Math.round(performance.rmse).toLocaleString()}`,
       description: "Root Mean Squared Error",
     },
   ];
