@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMarketSummary } from "../services/api";
+import PriceVsSizeChart from "../components/PriceVsPropertySizeChart";
 
 function Dashboard() {
 
@@ -191,6 +192,11 @@ function Dashboard() {
           </div>
 
         </div>
+
+        
+          <div className="mt-10">
+            <PriceVsSizeChart />
+          </div>
 
         {/* Main Actions */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
