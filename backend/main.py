@@ -476,3 +476,80 @@ def shap_analysis():
     )
 
     return result[:15]
+
+
+@app.get("/analytics/average-price-by-type")
+def average_price_by_type():
+
+    result = (
+        df.groupby("TYPE")["PRICE"]
+        .mean()
+        .sort_values(ascending=False)
+        .reset_index()
+    )
+
+    result.columns = ["type", "average_price"]
+
+    return result.to_dict(orient="records")
+
+# average-price-by-locality
+
+@app.get("/analytics/average-price-by-locality")
+def average_price_by_locality():
+
+    result = (
+        df.groupby("LOCALITY")["PRICE"]
+        .agg(
+            average_price="mean",
+            median_price="median",
+            property_count="count"
+        )
+        .reset_index()
+        .sort_values("average_price", ascending=False)
+    )
+
+    result.columns = [
+        "locality",
+        "average_price",
+        "median_price",
+        "property_count"
+    ]
+
+    return result.to_dict(orient="records")
+
+@app.get("/analytics/price-range")
+def price_range(
+    state: str | None = None,
+    locality: str | None = None,
+    min_price: float | None = None,
+    max_price: float | None = None
+):
+    filtered = df.copy()
+
+    # Filter by state
+    if state:
+        filtered = filtered[filtered["STATE"] == state]
+
+    # Filter by locality
+    if locality:
+        filtered = filtered[filtered["LOCALITY"] == locality]
+
+    # Filter by minimum price
+    if min_price is not None:
+        filtered = filtered[filtered["PRICE"] >= min_price]
+
+    # Filter by maximum price
+    if max_price is not None:
+        filtered = filtered[filtered["PRICE"] <= max_price]
+
+    return {
+        "property_count": int(len(filtered)),
+        "average_price": float(filtered["PRICE"].mean())
+        if len(filtered) > 0 else 0,
+        "median_price": float(filtered["PRICE"].median())
+        if len(filtered) > 0 else 0,
+        "minimum_price": float(filtered["PRICE"].min())
+        if len(filtered) > 0 else 0,
+        "maximum_price": float(filtered["PRICE"].max())
+        if len(filtered) > 0 else 0
+    }
