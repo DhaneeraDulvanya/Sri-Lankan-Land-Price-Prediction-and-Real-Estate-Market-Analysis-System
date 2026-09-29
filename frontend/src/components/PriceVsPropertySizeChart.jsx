@@ -92,18 +92,29 @@ function PriceVsSizeChart() {
               type="number"
               dataKey="price"
               name="Price"
+              width={80}
               tick={{ fill: "#94a3b8" }}
               tickFormatter={(value) =>
-                `Rs. ${(value / 1000000).toFixed(1)}M`
+                `Rs.${(value / 1000000).toFixed(1)}M`
               }
             />
 
-            <Tooltip />
+            <Tooltip
+              formatter={(value) =>
+                [`Rs. ${Number(value).toLocaleString("en-LK", { maximumFractionDigits: 0 })}`, "Price"]
+              }
+              contentStyle={{
+                backgroundColor: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                borderRadius: "8px",
+              }}
+              labelStyle={{ color: "#0f172a" }}
+            />
 
             <Scatter
               name="Properties"
               data={data}
-              fill="#0000ff"
+              fill="#22d3ee"
             />
 
           </ScatterChart>
