@@ -119,11 +119,21 @@ function PriceChart({ locality }) {
                 type="number"
                 dataKey="price"
                 name="Price"
+                width={90}
                 tick={{ fill: "#94a3b8" }}
+                tickFormatter={(value) =>
+                  `Rs. ${(Number(value) / 1000000).toFixed(1)}M`
+                }
               />
 
 
               <Tooltip
+                contentStyle={{
+                  backgroundColor: "#f8fafc",
+                  border: "1px solid #cbd5e1",
+                  borderRadius: "8px",
+                }}
+                labelStyle={{ color: "#0f172a" }}
                 cursor={{
                   strokeDasharray: "3 3"
                 }}
