@@ -84,13 +84,13 @@ function AveragePriceByType() {
           <YAxis
             tick={{ fill: "#94a3b8" }}
             tickFormatter={(value) =>
-              `$${(value / 1000000).toFixed(1)}M`
+              `Rs.${(value / 1000000).toFixed(1)}M`
             }
           />
 
           <Tooltip
             formatter={(value) => [
-              `$${Number(value).toLocaleString()}`,
+              `Rs.${Number(value).toLocaleString()}`,
               "Average Price",
             ]}
           />
