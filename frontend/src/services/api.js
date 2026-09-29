@@ -90,5 +90,15 @@ export const getShapAnalysis = async () => {
   return response.data;
 };
 
+export const getAveragePriceByType = async () => {
+  const response = await API.get("/analytics/average-price-by-type");
+  return response.data;
+};
+
+export const getAveragePriceByLocality = async () => {
+  const response = await API.get("/analytics/average-price-by-locality");
+  return response.data;
+};
+
 export default API;
 
