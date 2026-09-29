@@ -100,23 +100,5 @@ export const getAveragePriceByLocality = async () => {
   return response.data;
 };
 
-export const getPriceRangeAnalysis = async ({
-  state,
-  locality,
-  minPrice,
-  maxPrice,
-}) => {
-  const response = await API.get("/analytics/price-range", {
-    params: {
-      state,
-      locality,
-      min_price: minPrice,
-      max_price: maxPrice,
-    },
-  });
-
-  return response.data;
-};
-
 export default API;
 
