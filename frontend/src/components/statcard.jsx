@@ -91,7 +91,7 @@ function MarketStats({ locality }) {
     {
       title: "Average Price",
       value:
-        `$${Math.round(
+        ` Rs.${Math.round(
           stats.average_price
         ).toLocaleString()}`,
       description:
