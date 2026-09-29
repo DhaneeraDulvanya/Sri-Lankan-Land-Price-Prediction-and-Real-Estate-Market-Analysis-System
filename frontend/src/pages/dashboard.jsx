@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getMarketSummary } from "../services/api";
 import PriceVsSizeChart from "../components/PriceVsPropertySizeChart";
+import AveragePriceByType from "../components/AveragePriceByType";
+import AveragePriceByLocality from "../components/AveragePriceByLocalityChart";
 
 function Dashboard() {
 
@@ -193,10 +195,20 @@ function Dashboard() {
 
         </div>
 
-        
-          <div className="mt-10">
-            <PriceVsSizeChart />
-          </div>
+        {/* Price vs Property Size */}
+        <div className="mt-10">
+          <PriceVsSizeChart />
+        </div>
+
+        {/* Average Price by Property Type */}
+        <div className="mt-10">
+          <AveragePriceByType />
+        </div>
+
+        {/* Average Price by Locality */}
+        <div className="mt-10">
+          <AveragePriceByLocality />
+        </div>
 
         {/* Main Actions */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
