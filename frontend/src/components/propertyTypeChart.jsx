@@ -80,12 +80,19 @@ function PropertyTypeChart({ locality }) {
               />
 
               <YAxis
+                width={80}
                 tick={{ fill: "#94a3b8" }}
+                tickFormatter={(value) =>
+                  `Rs. ${new Intl.NumberFormat("en-US", {
+                    notation: "compact",
+                    maximumFractionDigits: 1,
+                  }).format(value)}`
+                }
               />
 
               <Tooltip
                 formatter={(value) =>
-                  `$${Number(value).toLocaleString()}`
+                  `Rs.${Number(value).toLocaleString()}`
                 }
               />
 
