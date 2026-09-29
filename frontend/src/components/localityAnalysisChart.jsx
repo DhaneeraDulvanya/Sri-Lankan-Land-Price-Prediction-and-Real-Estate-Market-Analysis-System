@@ -152,7 +152,7 @@ function LocalityChart() {
 
               <Tooltip
                 formatter={(value) =>
-                  `$${Number(
+                  `Rs.${Number(
                     value
                   ).toLocaleString()}`
                 }
